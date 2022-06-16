@@ -2,12 +2,12 @@
     margin: 0;
 }
 @font-face {
-    src: url(fonts/MyriadPro-Regular.otf);
+    src: url(MyriadPro-Regular.otf);
     font-family: MyriadPro;
 }
 @font-face {
     font-family: 'BloggerSans';
-    src: url(fonts/Blogger_Sans-Light.otf);
+    src: url(Blogger_Sans-Light.otf);
 }
 body {
     width: 100%;
@@ -102,5 +102,5 @@ body {
 
 }
 .orange_color {
-    background-color: #fe9500;
+    background: #fe9500;
 }
