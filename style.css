@@ -2,12 +2,12 @@
     margin: 0;
 }
 @font-face {
-    src: url(font/MyriadPro-Regular.otf);
+    src: url(fonts/MyriadPro-Regular.otf);
     font-family: MyriadPro;
 }
 @font-face {
     font-family: 'BloggerSans';
-    src: url(font/Blogger_Sans-Light.otf);
+    src: url(fonts/Blogger_Sans-Light.otf);
 }
 body {
     width: 100%;
