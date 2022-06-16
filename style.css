@@ -3,22 +3,13 @@
 }
 
 @font-face {
-<<<<<<< HEAD
     src: url('fonts/MyriadPro-Regular.otf');
     font-family: 'MyriadPro';
-=======
-    src: url(fonts/MyriadPro-Regular.otf);
-    font-family: MyriadPro;
->>>>>>> ea1de13bccfad5c7de1884198d9349940e592ff2
 }
 
 @font-face {
-    font-family: 'BloggerSans';
-<<<<<<< HEAD
     src: url('fonts/Blogger_Sans-Light.otf');
-=======
-    src: url(fonts/Blogger_Sans-Light.otf);
->>>>>>> ea1de13bccfad5c7de1884198d9349940e592ff2
+    font-family: 'BloggerSans';
 }
 
 body {
