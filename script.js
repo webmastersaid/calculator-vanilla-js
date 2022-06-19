@@ -1,74 +1,122 @@
+// constant
+const number_group = document.querySelectorAll('.number'),
+  sign_group = document.querySelectorAll('.sign'),
+  clear_button = document.querySelector('.clear'),
+  plusMinusDevision_buton = document.querySelector(".plusMinus"),
+  procent_button = document.querySelector('.procent'),
+  input = document.querySelector('.input')
 
-let number_group = document.querySelectorAll('.number'),
-sign_group = document.querySelectorAll('.sign'),
-result_button = document.querySelector('.equals'),
-clear_button = document.querySelector('.clear'),
-plusMinusDevision_buton = document.querySelector(".plusMinus"),
-procent_button = document.querySelector('.procent'),
-input = document.querySelector('.input')
+// dictionary of signs
+const dict_signs = {
+  '÷': '/',
+  '×': '*',
+  '−': '-',
+  '+': '+',
+  '=': '=',
+};
 
-// variables and arrays for save
-let array_numbers_1 = [],
-  array_numbers_2 = [],
-  sign,
-  save_num2,
+// array for calculation
+let arr_numbers = [],
+  // string for numbers
+  str_number = '',
+  // string for save first number after calculation
+  save_number = '',
+  // signs (operator of calculation)
+  sign = '',
+  // save sign for iteration click equal
+  save_sign = '',
+  // state of signs clickable
+  sign_state = true,
+  // state of equal clicked
+  equal_state = false;
 
-//variable and for ckecked arrays
-count_Array_numbers_2 = false;
+// add numbers and save
+function addNumberToArray() {
+  let number = this.textContent;
+  str_number += number;
+  input.value = str_number;
+  save_number = str_number;
+  sign_state = true;
+}
+// add sign and push to array
+function addSignToArray(sign) {
+  save_sign = sign;
+  if (sign_state) {
+    str_number != '' ? arr_numbers.push(str_number) : null;
+    str_number = '';
+    arr_numbers.push(sign);
+    equal_state = false;
+    sign_state = false;
+  }
+  input.value = '';
+}
 
-// event for buttons
+// events of buttons
 number_group.forEach((item) => {
-    item.addEventListener('click',saveNumberInArray)
+  item.addEventListener('click', addNumberToArray)
 })
-sign_group.forEach((item) => {
-    item.addEventListener("click", saveSignInArray); 
-}) 
-// functions in event 
-function saveNumberInArray () {
-    if (count_Array_numbers_2 == false) {
-        let number = this.textContent;
-        array_numbers_1.push(number);
-        input.value = array_numbers_1.join("");
-        //   console.log(array_numbers_1);
-    }
-    if (count_Array_numbers_2 == true) {
-        let number = this.textContent;
-        array_numbers_2.push(number);
-        input.value = array_numbers_2.join("");
-        // console.log(array_numbers_2);
-    }
-    
+
+// sign equal
+function equal(len, sign) {
+  len < 1 ? arr_numbers = ['0'] : null;
+  arr_numbers[len-1] == sign ? arr_numbers.push('0') : null;
+  str_number != '' ? arr_numbers.push(str_number) : null;
+  str_number = eval(arr_numbers.join(''));
+  equal_state ? str_number = eval(str_number + sign + save_number) : null;
+  input.value = str_number;
+  arr_numbers = [];
+  arr_numbers[0] = str_number;
+  equal_state = true;
 }
-function saveSignInArray () {
-    sign = this.textContent;
-    input.value = sign
-    count_Array_numbers_2 = true
+// calculation
+function calc() {
+  sign = this.textContent;
+  const numbers_len = arr_numbers.length;
+  switch (dict_signs[sign]) {
+    case "*":
+      addSignToArray(dict_signs[sign])
+      break;
+    case "-":
+      addSignToArray(dict_signs[sign])
+      break;
+    case "/":
+      addSignToArray(dict_signs[sign])
+      break;
+    case "+":
+      // arr_numbers.forEach((item, i) => {
+      //   str_number += arr_numbers[i];
+      //   if (i == 2) {
+      //     str_number = eval(str_number);
+      //     input.value = str_number;
+      //     arr_numbers = [];
+      //     arr_numbers[0] = str_number;
+      //     return;
+      //   }
+      // })
+      addSignToArray(dict_signs[sign])
+      break;
+    case "=":
+      equal(numbers_len, save_sign)
+      break;
+  }
+  str_number = '';
+  console.log(arr_numbers)
 }
 
-// result button event and function
-result_button.addEventListener('click',calc)
-function calc () {
-    let num1 = parseFloat(array_numbers_1.join(""));
-    let num2 = parseFloat(array_numbers_2.join(""));
-    // console.log(sign);
-      switch (sign) {
-        case "×":
-          result = num1 * num2;
-          save_num2 = num2;
-          break;
-        case "–":
-          result = num1 - num2;
-          save_num2 = num2;
-          break;
-        case "÷":
-          result = num1 / num2;
-          save_num2 = num2;
-          break;
-        case "+":
-          result = num1 + num2;
-          save_num2 = num2;
-          break;
-      }
-    input.value = result
-    console.log(result)
+// events of signs
+sign_group.forEach((item) => {
+  item.addEventListener('click', calc);
+});
+
+// clear field and variables
+function clear() {
+  input.value = '',
+  arr_numbers = [''],
+  str_number = '',
+  save_number = '',
+  save_sign = '',
+  sign = ''
 }
+
+// clear event
+clear_button.addEventListener('click', clear);
