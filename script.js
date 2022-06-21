@@ -29,14 +29,15 @@ let arr_numbers = [],
   sign_state = true,
   // state of equal clicked //состояние равного щелчка
   equal_state = false,
-
-  new_exeption_state = false;
+  // переменная для определения состояния: нужно ли нажимать на знак равно два раза или достатично один раз, как правило для первого результата нужно нажимать два раза, после первых двух нажатий достаточно нажимать по одному разу для получения ответа.
+  // если переменная = true, то срабатывает функция которая делает вычисления, на основе знака, в место того чтобы нажимать два раза на =, это функция сразу делает вычесления и прысваевает значение переменной str_number
+  count_str_number_function = true;
 
   
 
 // add numbers and save //добавить номера и сохранить
 function addNumberToArray() {
-  // clearInputIfPressAnyButton();
+  clearInputIfPressAnyButton();
   let number = this.textContent;
   str_number += number;
   input.value = str_number;
@@ -76,6 +77,13 @@ function equal(len, sign) {
   // console.log("5 ", str_number);
   console.log('str_number = ',str_number,' sign = ',sign,' save number = ',save_number)
   equal_state ? str_number = eval(str_number + sign + save_number) : null;
+
+  if (count_str_number_function == true) {
+      str_number = str_numberFunction( parseFloat(str_number),sign,parseFloat(save_number)
+      );
+      count_str_number_function = false;
+  }
+
   input.value = str_number;
   arr_numbers = [];
   arr_numbers[0] = str_number;
@@ -128,6 +136,7 @@ function clear() {
   save_number = '',
   save_sign = '',
   sign = ''
+  count_str_number_function = true;
 }
 
 // clear event //очистить событие
@@ -143,11 +152,32 @@ function clearInputIfPressAnyButton () {
   }
 //
 procent_button.addEventListener('click',procentCalc)
-
+// function for button procent
 function procentCalc () {
   console.log(save_number)
   save_number = save_number / 100 
   input.value = save_number
   arr_numbers.push(save_number);
   sign_state = true;
+}
+//function to remove two clicks on the equals sign
+//функция для того чтобы убрать два нажатия на знак равно 
+
+function str_numberFunction(num1,sign,num2) {
+  let res
+  switch (sign) {
+    case "*":
+       res = num1 * num2
+      break;
+    case "-":
+       res = num1 - num2;
+      break;
+    case "/":
+       res = num1 / num2;
+      break;
+    case "+":
+       res = num1 + num2;
+      break;
+  }
+  return res
 }
